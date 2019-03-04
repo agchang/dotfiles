@@ -3,4 +3,4 @@
 
 (set-face-foreground 'minibuffer-prompt "white")
 
- (defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'yes-or-no-p 'y-or-n-p)
