@@ -42,4 +42,9 @@ There are two things you can do about this warning:
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-(load-theme 'spacemacs-dark)
+;(load-theme 'spacemacs-dark)
+
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "/usr/local/opt/llvm/bin/clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
