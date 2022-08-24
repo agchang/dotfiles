@@ -19,6 +19,8 @@ unset __conda_setup
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export WORKON_HOME="$PYENV_ROOT/versions/"
 
 export LS_COLORS="$LS_COLORS:di=0;36:ln=0;93:ex=0;35:"
 alias ls='gls -alhF --group-directories-first --color=auto'
