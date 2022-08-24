@@ -9,6 +9,9 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(require 'ansi-color)
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
 ;; allow tab to expand a subtree
 (use-package dired-subtree :ensure t
   :after dired
@@ -28,7 +31,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(dired-subtree smart-compile flycheck elpy company slime magit ##)))
+   '(blacken dired-subtree smart-compile flycheck elpy company slime magit ##)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -40,6 +43,7 @@
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key (kbd "C-c m") 'smart-compile)
 
 (setq inferior-lisp-program "/opt/homebrew/bin/sbcl")
 
@@ -50,8 +54,14 @@
   (elpy-enable)
   (setenv "WORKON_HOME" "~/.pyenv/versions/")
   )
-(setq python-shell-completion-native-disabled-interpreters '("python3"))
 
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i --simple-prompt")
+;; Use IPython for REPL
+(setq python-shell-completion-native-disabled-interpreters '("ipython"))
+(add-hook 'elpy-mode-hook (lambda ()
+                            (add-hook 'before-save-hook
+                                      'elpy-black-fix-code nil t)))
 
 ;; Enable Flycheck
 (when (require 'flycheck nil t)
