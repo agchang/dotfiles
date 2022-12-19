@@ -31,7 +31,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(blacken dired-subtree smart-compile flycheck elpy company slime magit ##)))
+   '(go-mode flymake-shellcheck helm-projectile helm projectile blacken dired-subtree smart-compile flycheck elpy company slime magit ##)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -39,8 +39,10 @@
  ;; If there is more than one, they won't work right.
  )
 
+(require 'helm)
+
 ;; Bindings (from Steve Yegge)
-(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-x\C-m" 'helm-M-x)
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key (kbd "C-c m") 'smart-compile)
@@ -62,11 +64,20 @@
 (add-hook 'elpy-mode-hook (lambda ()
                             (add-hook 'before-save-hook
                                       'elpy-black-fix-code nil t)))
+(setq blacken-line-length 79)
 
 ;; Enable Flycheck
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
+(use-package flymake-shellcheck
+  :commands flymake-shellcheck-load
+  :init
+  (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
+
 ;; `a` to replace current buffer in dired instead of creating a new buffer when opening a new directory
 (put 'dired-find-alternate-file 'disabled nil)
+
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)

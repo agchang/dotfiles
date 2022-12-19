@@ -25,3 +25,9 @@ export WORKON_HOME="$PYENV_ROOT/versions/"
 export LS_COLORS="$LS_COLORS:di=0;36:ln=0;93:ex=0;35:"
 alias ls='gls -alhF --group-directories-first --color=auto'
 alias e='emacs'
+# elpy thinks `py.test` even though it has been `pytest` for a while
+alias py.test='pytest'
+
+#export PATH="/Users/agc/Library/Android/sdk/platform-tools:$PATH"
+#export PATH="/Users/agc/Library/Android/sdk/cmdline-tools/latest/bin:$PATH"
+#export PATH="/Users/agc/Library/Android/sdk/emulator:$PATH"
